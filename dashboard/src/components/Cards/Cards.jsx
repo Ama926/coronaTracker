@@ -32,32 +32,32 @@ const Cards = ({ data: {confiremed, recovered, deaths, lastupdate} }) => {
 
                 <Grid item component={Cards} xs={12} md={3} className={cx(styles.card, styles.recovered)}>
                    <CardContent>
-                       <Typography color="textSecondary" gutterBottom>Infected</Typography>
+                       <Typography color="textSecondary" gutterBottom>Recovered</Typography>
                        <Typography variant="h5">
                            <CountUp 
                             start ={0}
-                            end={confiremed.value}
+                            end={recovered.value}
                             duration={2.5}
                             separator=","
                            />
                        </Typography>
-                       <Typography color="textSecondary">REAL DATE</Typography>
+                       <Typography color="textSecondary">{new Date(lastupdate).toDateString()}</Typography>
                        <Typography variant="body2">No of active cases </Typography>
                     </CardContent> 
                 </Grid>
 
                 <Grid item component={Cards} xs={12} md={3} className={cx(styles.card, styles.deaths)}>
                    <CardContent>
-                       <Typography color="textSecondary" gutterBottom>Infected</Typography>
+                       <Typography color="textSecondary" gutterBottom>Deaths</Typography>
                        <Typography variant="h5">
                            <CountUp 
                             start ={0}
-                            end={confiremed.value}
+                            end={deaths.value}
                             duration={2.5}
                             separator=","
                            />
                        </Typography>
-                       <Typography color="textSecondary">REAL DATE</Typography>
+                       <Typography color="textSecondary">{new Date(lastupdate).toDateString()}</Typography>
                        <Typography variant="body2">No of active cases </Typography>
                     </CardContent> 
                 </Grid>

@@ -8,27 +8,42 @@ import { Cards, Charts, CountryPicker } from './components';
 import styles from './App.module.css';
 import { fetchData } from './api';
 
+import coronaImage from './images/covid19.jpg';
+
+
+
 //don't have any interferences with any other css files
 class App extends React.Component{
     state = {
         data : {},
+        country: '',
     }
 
     async componentDidMount()    //make request to the fetch data
     {
-        const data = await fetchData();
+        const fetchedData = await fetchData();
 
-        this.setState({ data });
+        this.setState({ data: fetchedData });
        // console.log(data);
     }
+
+    handleCountryChange = async(country) =>{
+        const fetchedData = await fetchData(country);
+
+        this.setState({data: fetchedData, country: country});
+        console.log(fetchedData);
+        console.log(country);
+    }
+
     render()
     {
-        const { data } = this.state;
+        const { data, country } = this.state;
         return(
         <div className={styles.container}>   
+            <img className={styles.image} src={coronaImage} alt="COVID-19"/>
             <Cards data={data} />
-            <Charts />
-            <CountryPicker />
+            <Charts data={data} country={country} />
+            <CountryPicker handleCountryChange={this.handleCountryChange} />
         </div>
         );
     }

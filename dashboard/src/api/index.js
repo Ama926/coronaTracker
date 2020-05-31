@@ -3,13 +3,20 @@ import axios from 'axios';   //used to make API request
 const url = 'https://www.hpb.health.gov.lk/api/get-current-statistical';
 const Globalurl = 'https://covid19.mathdro.id/api';
 
-export const fetchData = async () => {
+export const fetchData = async (country) => {
+    let changeableUrl = Globalurl;
+
+    if(country){
+        changeableUrl = `${Globalurl}/countries/${country}`;
+    }
     try{
         //const response = await axios.get(url);
         //return response;                                // returning response of api
        // console.log(response);
 
-       const { data } = await axios.get(url);
+      // const { data } = await axios.get(url);
+       const { data } = await axios.get(changeableUrl);
+
 
        const modifiedData = {
            confiremed: data.data.local_total_cases,
@@ -26,13 +33,13 @@ export const fetchData = async () => {
         return {confirmed, recovered, deaths, lastupdate};*/
     }
     catch(error){
-
+        console.log(error);
     }
 }
 
 export const fetchDailyData = async () =>{
     try{
-        const { data }  = await axios.get('${usr}/daily');
+        const { data }  = await axios.get(`${url}/daily`);
 
         const modifiedData = data.map((dailyData) => ({
             confirmed: dailyData.confirmed.total,
@@ -47,11 +54,13 @@ export const fetchDailyData = async () =>{
     }
 }
 
-export const countries = async () =>
+export const fetchCountries = async () =>
 {
     try{
-        const response = await axios.get('${Globalurl}/countries');
-        console.log(response);
+        const {data: { countries }} = await axios.get(`${Globalurl}/countries`);
+      //  console.log(response);
+
+      return countries.map((country) => country.name);
     }
     catch(error){
         console.log(error);
