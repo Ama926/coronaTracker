@@ -14,23 +14,23 @@ export const fetchData = async (country) => {
         //return response;                                // returning response of api
        // console.log(response);
 
-       const { data } = await axios.get(url);
-       //const { data } = await axios.get(changeableUrl);
+      // const { data } = await axios.get(url);
+       const { data: { confirmed, recovered, deaths, lastUpdate} } = await axios.get(changeableUrl);
 
 
-       const modifiedData = {
+    /*   const modifiedData = {
            confirmed: data.data.local_total_cases,
            recovered: data.data.local_recovered,
            deaths: data.data.local_deaths,
            lastupdate: data.data.update_date_time
        }
-        return modifiedData;
+        return modifiedData;*/
 
         //easy method
 
-      /*  const { data : {confirmed, recovered, deaths, lastupdate} } = await axios.get(url);
+       // const { data : {confirmed, recovered, deaths, lastupdate} } = await axios.get(Globalurl);
 
-        return {confirmed, recovered, deaths, lastupdate};*/
+        return {confirmed, recovered, deaths, lastUpdate};
     }
     catch(error){
        // console.log(error);

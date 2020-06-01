@@ -6,10 +6,11 @@ import cx from 'classnames';
 import styles from './Cards.module.css';
 
  //functional components  //error: data is undefiened
-//const Info = ({ data: {confirmed, recovered, deaths, lastupdate} }) => {
-const Info = ({ data: {local_total_cases, recovered, deaths, lastupdate} }) => {  
+//const Info = ({ data: {local_total_cases, local_recovered, local_deaths, update_date_time} }) => {
+const Info = ({ data: {confirmed, recovered, deaths, lastupdate} }) => {  
  // console.log(confiremed);
-  if(!local_total_cases){
+  if(!confirmed){
+   // if(!local_total_cases){
       return 'Loading...';
   }
     return(
@@ -21,9 +22,9 @@ const Info = ({ data: {local_total_cases, recovered, deaths, lastupdate} }) => {
                        <Typography variant="h5" component="h2">
                            <CountUp 
                             start ={0}  //starting value
-                            end={local_total_cases}  //ending value
+                            end={confirmed.value}  //ending value
                             duration={2.5}  //time for counting
-                            separator=","
+                            //separator=","
                            />
                        </Typography>
                        <Typography color="textSecondary">{new Date(lastupdate).toDateString()}</Typography>
@@ -39,7 +40,7 @@ const Info = ({ data: {local_total_cases, recovered, deaths, lastupdate} }) => {
                             start ={0}
                             end={recovered.value}
                             duration={2.75}
-                            separator=","
+                           // separator=","
                            />
                        </Typography>
                        <Typography color="textSecondary">{new Date(lastupdate).toDateString()}</Typography>
@@ -55,7 +56,7 @@ const Info = ({ data: {local_total_cases, recovered, deaths, lastupdate} }) => {
                             start ={0}
                             end={deaths.value}
                             duration={2.65}
-                            separator=","
+                           // separator=","
                            />
                        </Typography>
                        <Typography color="textSecondary">{new Date(lastupdate).toDateString()}</Typography>
