@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { fetchDailyData } from '../../api';
-import { Line, Bar } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';      //to use charts
 
 import styles from './Charts.module.css';
 
-const Charts = ({data: {confirmed,recovered,deaths}, country}) => {  //functional components
-    const [dailyData, setDailyData] = useState([]);
+const Chart = ({data: {confirmed,recovered,deaths}, country}) => {  //functional components
+    const [dailyData, setDailyData] = useState({});
 
   /*  state ={
         dailyData: {}
@@ -14,35 +14,40 @@ const Charts = ({data: {confirmed,recovered,deaths}, country}) => {  //functiona
     useEffect(() => {
         const fetchAPI = async () =>
         {
-            setDailyData(await fetchDailyData());
+            const initialDailyData = await fetchDailyData();
+            setDailyData(initialDailyData);
+           // setDailyData(await fetchDailyData());
         }
        // console.log(dailyData);
         fetchAPI();
     }, []);
 
     const lineChart = (
-        dailyData.length !== 0
+       // dailyData.length !== 0
+       dailyData[0]
         ?(
         <Line 
          data={{
-             labels: dailyData.map(({ date })=> date),
+             labels: dailyData.map(({ date }) => date),
              datasets: [{
-                data: dailyData.map(({local_total_cases}) => local_total_cases),
+               // data: dailyData.map((data) => data.data.local_total_cases),
+                data: dailyData.map((data) => data.confirmed),
                 label: 'Infected',
                 borderColor: '#3333ff',
                 fill: true,
              }, {
-                data: dailyData.map(({local_deaths}) => local_deaths),
-                label: 'Infected',
+              //  data: dailyData.map((data) => data.data.local_deaths),
+                data: dailyData.map((data) => data.deaths),
+                label: 'Deaths',
                 borderColor: 'red',
                 backgroundColor: 'rgba(250,0,0,0.5)',
                 fill: true,
-             }],
+             },],
          }}
         />) : null
     );
 
-    console.log(confirmed, recovered, deaths);
+    //console.log(confirmed, recovered, deaths);
     const barChart = (
         confirmed?(
             <Bar
@@ -55,13 +60,13 @@ const Charts = ({data: {confirmed,recovered,deaths}, country}) => {  //functiona
                             'rgba(0,255,0,0.5)',
                             'rgba(250,0,0.5)',
                         ],
-                        data: [confirmed.value, recovered.value, deaths.value]
-                    }]
+                        data: [confirmed.value, recovered.value, deaths.value],
+                    },],
 
                 }}
                 options={{
                     legend: {display: false },
-                    title: {display: true, text:`Current state in ${country}`}
+                    title: {display: true, text:`Current state in ${country}`},
                 }}
             />
         ) : null
@@ -74,4 +79,4 @@ const Charts = ({data: {confirmed,recovered,deaths}, country}) => {  //functiona
     )
 }
 
-export default Charts;
+export default Chart;

@@ -21,18 +21,18 @@ class App extends React.Component{
 
     async componentDidMount()    //make request to the fetch data
     {
-        const fetchedData = await fetchData();
+        const data = await fetchData();
 
-        this.setState({ data: fetchedData });
+        this.setState({ data });
        // console.log(data);
     }
 
-    handleCountryChange = async(country) =>{
-        const fetchedData = await fetchData(country);
+    handleCountryChange = async(country) => {
+        const data = await fetchData(country);
 
-        this.setState({data: fetchedData, country: country});
-        console.log(fetchedData);
-        console.log(country);
+        this.setState({data, country: country });
+      /*  console.log(fetchedData);
+        console.log(country);*/
     }
 
     render()

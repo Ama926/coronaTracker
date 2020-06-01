@@ -14,12 +14,12 @@ export const fetchData = async (country) => {
         //return response;                                // returning response of api
        // console.log(response);
 
-      // const { data } = await axios.get(url);
-       const { data } = await axios.get(changeableUrl);
+       const { data } = await axios.get(url);
+       //const { data } = await axios.get(changeableUrl);
 
 
        const modifiedData = {
-           confiremed: data.data.local_total_cases,
+           confirmed: data.data.local_total_cases,
            recovered: data.data.local_recovered,
            deaths: data.data.local_deaths,
            lastupdate: data.data.update_date_time
@@ -33,26 +33,27 @@ export const fetchData = async (country) => {
         return {confirmed, recovered, deaths, lastupdate};*/
     }
     catch(error){
-        console.log(error);
+       // console.log(error);
+        return error;
     }
 }
 
 export const fetchDailyData = async () =>{
     try{
-        const { data }  = await axios.get(`${url}/daily`);
+        const { data }  = await axios.get(`${Globalurl}/daily`);
 
-        const modifiedData = data.map((dailyData) => ({
+      /*  const modifiedData = data.map((dailyData) => ({
             confirmed: dailyData.confirmed.total,
             deaths: dailyData.deaths.total,
-            date: dailyData.reportDate,
-        }));
+            date: dailyData.reportDate,*/
+            return data.map(({ confirmed, deaths, reportDate: date }) => ({ confirmed: confirmed.total, deaths: deaths.total, date }));
 
-        return modifiedData;
     }
     catch(error){
-        console.log(error);
+       // console.log(error);
+        return error;
     }
-}
+};
 
 export const fetchCountries = async () =>
 {
@@ -63,6 +64,7 @@ export const fetchCountries = async () =>
       return countries.map((country) => country.name);
     }
     catch(error){
-        console.log(error);
+        return error;
+      //  console.log(error);
     }
-}
+};
